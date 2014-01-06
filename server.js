@@ -25,9 +25,9 @@ app.listen(port, function(){
 });
 
 /*jshint multistr: true */
-var doc = "#Header\n\
+var doc = "# Header\n\
 \n\
-##Subheader a bit smaller\n\
+## Subheader a bit smaller\n\
 \n\
 1. one\n\
 2. two\n\
