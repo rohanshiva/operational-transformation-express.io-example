@@ -1,10 +1,10 @@
 Operational transformation and Express.io example
 =================================================
 
-Operational Transformation and Express.io example that showcases the ["ot"
-(Operational
-Transformation)](https://github.com/Operational-Transforation/ot.js) library by
-Tim Baumann in a combination with [Express.io] that makes it easy to extend.
+This is trying to me a minimal Operational Transformation and Express.io
+example that showcases the [Operational
+Transformation](/Operational-Transformation/ot.js) (ot) library by Tim Baumann
+in a combination with [Express.io].
 
 Install
 -------
