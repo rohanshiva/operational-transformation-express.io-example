@@ -4,7 +4,7 @@ Operational transformation and Express.io example
 This is trying to me a minimal Operational Transformation and Express.io
 example that showcases the [Operational
 Transformation](/Operational-Transformation/ot.js) (ot) library by Tim Baumann
-in a combination with [Express.io].
+in a combination with [Express.io](http://express-io.org).
 
 Install
 -------
