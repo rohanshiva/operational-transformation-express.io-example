@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en"><![endif]-->
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo</title>
+<link rel="stylesheet" href="/bower_components/foundation/css/normalize.css">
+<link rel="stylesheet" href="/bower_components/foundation/css/foundation.css">
+<link rel="stylesheet" href="/bower_components/codemirror/lib/codemirror.css" />
+<script src="/bower_components/modernizr/modernizr.js"></script>
+</head>
+<body>
+<div class="row">
+    <div class="small-12 columns">
+        <h1>Demo</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-6 columns">
+        <div id="editor-wrapper"></div>
+    </div>
+    <div class="medium-6 columns">
+        <div id="preview-wrapper"></div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/bower_components/jquery/jquery.js"></script>
+<script src="/bower_components/foundation/js/foundation.js"></script>
+<script src="/js/ot.js"></script>
+<script src="/bower_components/codemirror/lib/codemirror.js"></script>
+<script src="/bower_components/codemirror/mode/xml/xml.js"></script>
+<script src="/bower_components/codemirror/mode/markdown/markdown.js"></script>
+<script src="/bower_components/marked/lib/marked.js"></script>
+
+<script type="text/javascript">
+$(document).foundation();
+
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+});
+
+var EditorClient = ot.EditorClient;
+var SocketIOAdapter = ot.SocketIOAdapter;
+var CodeMirrorAdapter = ot.CodeMirrorAdapter;
+var socket = io.connect('http://localhost:3000');
+
+var editorWrapper = document.getElementById('editor-wrapper');
+var cm = window.cm = CodeMirror(editorWrapper, {
+    lineNumbers: true,
+    lineWrapping: true,
+    mode: 'markdown',
+    readOnly: 'nocursor'
+});
+
+socket.emit('ready');
+
+var cmClient;
+socket.on('doc', function (obj) {
+    $('#preview-wrapper').html(marked(obj.str));
+    cm.setValue(obj.str);
+    cm.setOption('readOnly', false);
+    cmClient = window.cmClient = new EditorClient(
+        obj.revision,
+        obj.clients,
+        new SocketIOAdapter(socket),
+        new CodeMirrorAdapter(cm)
+    );
+
+    cm.on('change', function () {
+        if (!cmClient) { console.log('no client'); return; }
+        $('#preview-wrapper').html(marked(cm.getValue()));
+    });
+});
+</script>
+</body>
+</html>

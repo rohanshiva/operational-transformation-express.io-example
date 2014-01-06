@@ -1,0 +1,9 @@
+{
+  "name": "ot-codemirror-express.io-example",
+  "version": "0.0.1",
+  "dependencies": {
+    "foundation": "",
+    "codemirror": "",
+    "marked": ""
+  }
+}
